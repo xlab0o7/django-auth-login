@@ -8,9 +8,12 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
+
+from fooditems.models import Fooditems
 from . tokens import generate_token
 
 # Create your views here.
+
 def home(request):
     return render(request, 'authentication/index.html')
 
@@ -77,7 +80,8 @@ def signup(request):
         )
         email.send()
         
-        myuser.save()
+        # myuser.save()
+            
         return redirect('login1')
         
     return render(request, 'authentication/signup.html')
@@ -91,7 +95,8 @@ def login1(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            fname = user.first_name
+            fname = user.get_username
+            print(fname)
             return render(request, 'authentication/index.html', {'fname': fname})
             
         else:

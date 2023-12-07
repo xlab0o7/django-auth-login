@@ -1,0 +1,14 @@
+body{
+    background-color: #2e6170b7 ;
+    /* background-image: url('./file.png'); */
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#btn-action{
+    padding: 3px;
+}
+
+.warning {
+    background-color: #ffe066; /* Adjust the color as needed */
+}

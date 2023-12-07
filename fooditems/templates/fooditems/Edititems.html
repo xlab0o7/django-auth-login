@@ -1,0 +1,21 @@
+{% extends "fooditems/base.html" %}
+
+{% block title %}Edit Items{% endblock title %} 
+
+{%block main_content %}
+  <section class="container" >
+    <div class='row text-center text-white mt-5'>
+      <h1>Edit FoodItems</h1><br/>
+    </div>
+
+    <div class='row justify-content-around mt-3'>
+      <div class='col-sm-4'>
+        <form action='' method='POST' class="bg-white p-4 rounded shadow">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </form>
+      </div>
+    </div>
+  </section>
+  {% endblock main_content %}

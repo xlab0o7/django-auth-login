@@ -1,4 +1,6 @@
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+# from django.contrib.auth.tokens import default_token_generator
+# from django.contrib.auth.models import User
 from six import text_type
 
 class TokenGenerator(PasswordResetTokenGenerator):
@@ -8,3 +10,6 @@ class TokenGenerator(PasswordResetTokenGenerator):
         )
 
 generate_token = TokenGenerator()
+
+# user = User.objects.all()
+# token = default_token_generator.make_token(user)
