@@ -21,7 +21,7 @@
 
     
     <div class="container justify-content-around col-sm mt-5">
-        <h2>Hey, {{ fname }}</h2>
+        <h2>Hey, {{ user.get_username }}</h2>
     </div>
     <br/><br/><br/>
     <a class='btn btn-primary' href='{% url "foodhome" %}'>ADD-Items</a>
