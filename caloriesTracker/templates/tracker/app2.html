@@ -1,0 +1,103 @@
+{% extends "tracker/base.html" %}
+{% comment %} {% for items in foods %}
+<input type='radio' name='Fitems' id='Fitems{{forloop.counter}}' value='{{food.id}}'>
+<label for='Fitems{{forloop.counter}}'>{{items.name}} </label><br/>
+{% endfor %} {% endcomment %}
+
+{% block title %}Application{% endblock title %}
+
+{% block main_content %}
+<section>
+  <div class="container align-items-center">
+    <div class=' text-center  mt-5'>
+      <h1>Application</h1><br/>
+      <a class="btn btn-primary" href='{% url "foodhome" %}'>Food Items</a><br/><br/><br/>
+    </div>
+  </div>
+
+    <div class="container">
+    <div class='row justify-content-center text-white mt-3 '>
+      <div class="col-8">
+        <form method='POST'>
+          {% csrf_token %}
+          <table class="table table-dark table-hover" style="width:80%">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+              <th scope="col">Select</th>
+              <th scope="col">Food List</th>
+              <th scope="col">Calories</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for items in foods %}
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+              <td>
+                <input type="radio" name="selectedFood" value="{{items.id}}">
+              </td>
+              <td>{{items.names}}</td>
+              <td>{{items.calories}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <button class="btn btn-primary" type='submit'>Add Selected Item</button>
+      </form>
+      </div>
+      
+      <div class="col">
+        <table id='secondTable' class="table table-dark table-hover ">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">User</th>
+              <th scope="col">FoodItems</th>
+              <th scope="col">Calories</th>
+              {% comment %} <th scope="col">User Calories</th>  {% endcomment %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for items in foods %}
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+              <td>{{user.get_username}}</td>
+              <td>{{items.names}}</td>
+              <td>{{items.calories}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+         </table>
+        </div>
+      </div>
+    </div>
+</section>
+{% endblock main_content %}
+
+{% block script %}
+{% comment %} <script>
+  $(document).ready(function(){
+    console.log("button is pressed");
+  })
+    function addItemToTable() {
+            
+      var selectedItemId = document.querySelector('input[name="selectedFood"]:checked').value;
+      var selectedFood = {% for items in foods %}
+                          {% if items.id == selectedItemId %}
+                            {{ items|safe }}
+                          {% endif %}
+                        {% endfor %};
+      var newRow = document.createElement("tr");
+      newRow.innerHTML = `<th scope="row">1</th>
+      <td>{{ user.get_username }}</td>
+      <td>${selectedFood.name}</td>
+                          <td>${selectedFood.ucalories}</td>`;                   
+      document.querySelector("#secondTable tbody").appendChild(newRow);
+  }
+</script> {% endcomment %}
+{% endblock script %}
+{% comment %} <div class='row text-center  mt-5'>
+  {% for food in foods %}
+  <p>{{ food.names }} - {{ food.calories }} calories <a href="{% url 'caloriesTracker:add_food' food.id %}">Add</a></p>
+  {% endfor %}
+</div> {% endcomment %}

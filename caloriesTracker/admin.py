@@ -1,8 +1,10 @@
 from django.contrib import admin
-# from .models import Tracker
+from .models import ListFoodItems, DailyFoodInTake
 
 # Register your models here.
-# @admin.register(Tracker)
+admin.site.register(ListFoodItems)
+admin.site.register(DailyFoodInTake)
+
 # class trackerAdmin(admin.ModelAdmin):
 #     list_display = [
 #         'id',
