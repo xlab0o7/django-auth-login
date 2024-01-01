@@ -31,13 +31,13 @@
         var progressBar = $('.progress-bar');
         var width = 0;
         var interval = setInterval(function(){
-          width += 50;
+          width += 100;
           progressBar.css('width', width + '%');
           progressBar.attr('aria-valuenow', width);
           if (width >= 100) {
             clearInterval(interval);
           }
-        }, 550); 
+        }, 650); 
       });
     </script>
     {% endblock myscripts %}
