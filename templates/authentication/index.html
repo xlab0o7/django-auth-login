@@ -1,39 +1,32 @@
 {% extends "authentication/base.html" %}
-{% block title %}Auth-Home{% endblock title %}
-
+{% block title %}Auth-Home{% endblock title %} 
 
 {% block main_content %}
-
-<div class='container align-items-center'>
-
+  <div class="container align-items-center">
     {% for message in messages %}
 
-    <div class='alert alert-{{ message.tags }} alert-dismissible fade show' role="alert" >
-    <strong>Messages:</strong> {{ message }} 
-    {% comment %} <span aria-hidden='True'>&times;</span> {% endcomment %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+      <strong>Messages:</strong> {{ message }} 
+      <span aria-hidden="True">&times;</span>
     </div>
 
-    {% endfor %}
+    {% endfor %} {% if user.is_authenticated %}
+    <br /><br /><br />
+    <a class="btn btn-primary col-sm-1" href='{% url "signout" %}'>Logout</a>
 
-    {% if user.is_authenticated %}
-    <br/><br/><br/>
-    <a class='btn btn-primary col-sm-1' href='{% url "signout" %}'>Logout</a>
-
-    
     <div class="container justify-content-around col-sm mt-5">
-        <h2>Hey, {{ user.get_username }}</h2>
+      <h2>Hey, {{ user.get_username }}</h2>
     </div>
-    <br/><br/><br/>
-    <a class='btn btn-primary' href='{% url "foodhome" %}'>ADD-Items</a>
+    <br /><br /><br />
+    <a class="btn btn-primary" href='{% url "foodhome" %}'>ADD-Items</a>
+    <a class="btn btn-primary" href='{% url "caloriesTracker:food_list" %}'>Another Application</a>
     {% else %}
 
-    <a class='btn btn-primary col-sm-1' href='{% url "signup" %}'>Signup</a>
-    <a class='btn btn-primary col-sm-1' href='{% url "login1" %}'>Login</a>
-    
+    <a class="btn btn-primary col-sm-1" href='{% url "signup" %}'>Signup</a>
+    <a class="btn btn-primary col-sm-1" href='{% url "login1" %}'>Login</a>
+
     {% endif %}
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-    <h3>Welcome to This Website</h3> 
-
-</div>
-
+    <br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <h3>Welcome to This Website</h3>
+  </div>
 {% endblock main_content %}

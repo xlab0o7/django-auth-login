@@ -1,0 +1,62 @@
+{% extends "authentication/base.html" %}
+
+{% block title %}Application{% endblock title %}
+
+{% block main_content %}
+<section>
+    <div class='row text-center  mt-5'>
+        <h1>Application</h1><br/>
+        <a class="btn btn-primary" href='{% url "foodhome" %}'>ADD-Items</a>
+    </div>
+
+    {% comment %} table-1 {% endcomment %}
+
+    <div class='row justify-content-around text-white mt-3 '>
+      <div class="col ">
+        <table class="table table-dark table-hover ">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Food List</th>
+              <th scope="col">Calories</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for items in itemModel %}
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+              <td>{{items.name}}</td>
+              <td>{{items.ucalories}}</td>
+          </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+{% comment %} Table no 2 {% endcomment %}
+
+      <div class="col">
+        <table class="table table-dark table-hover ">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">User</th>
+              <th scope="col">FoodItems</th>
+              {% comment %} <th scope="col">Calories</th>
+              <th scope="col">User Calories</th> {% endcomment %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for items in itemModel %}
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+              <td>{{user.get_username}}</td>
+              <td>{{items.name}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+         </table>
+        </div>
+</section>
+
+{% endblock main_content %}
