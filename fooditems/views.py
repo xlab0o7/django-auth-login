@@ -1,7 +1,7 @@
 
 # from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from .models import FoodLog, Fooditems
 from .form import AddFoodItems
@@ -14,35 +14,36 @@ from django.views import generic
 
 class foodhome(View):
     def get(self, request):
-        if request.method == 'GET':
-            food = Fooditems.objects.filter(user=self.request.user)
-            allfood = Fooditems.objects.all()
-            foodlog = FoodLog.objects.filter(user=self.request.user)
-            return render(request, 'fooditems/index.html', {'food': food, 'allfood': allfood, 'foodlog': foodlog})
+        # if request.method == 'GET':
+        food = Fooditems.objects.filter(user=request.user)
+        allfood = Fooditems.objects.all()
+        foodlog = FoodLog.objects.filter(user=request.user)
+        return render(request, 'fooditems/index.html', {'food': food, 'allfood': allfood, 'foodlog': foodlog})
 
     def post(self, request):
-        if request.method == 'POST':
-
-            selected_food = request.POST['food_consumed']
-            food_consumed = Fooditems.objects.get(name=selected_food)
-            user = request.user
-            food_log = FoodLog(user=user, food_consumed=food_consumed)
-            food_log.save()
-            return redirect('foodhome')
+        # if request.method == 'POST':
+        # selected_food = request.POST['food_consumed']
+        selected_food = request.POST.get('food_consumed')
+        # food_consumed = Fooditems.objects.get(name=selected_food)
+        food_consumed = get_object_or_404(Fooditems, name=selected_food)
+        user = request.user
+        food_log = FoodLog(user=user, food_consumed=food_consumed)
+        food_log.save()
+        return redirect('foodhome')
 
 
 class delFoodlog(View):
     def post(self, request):
         data = request.POST
         id = data.get('id')
-        model = FoodLog.objects.get(id=id)
+        # model = FoodLog.objects.get(id=id)
+        model = get_object_or_404(FoodLog, id=id)
         print(model, ' Successfully deleted!!')
         model.delete()
         return redirect('foodhome')
 
 
 class addItems(View):
-
     def get(self, request):
         fm = AddFoodItems
         return render(request, 'fooditems/Additems.html', {'form': fm})
@@ -70,12 +71,14 @@ class deleteItems(generic.DeleteView):
 
 class editItems(View):
     def get(self, request, id):
-        model = Fooditems.objects.get(id=id)
+        # model = Fooditems.objects.get(id=id)
+        model = get_object_or_404(Fooditems, id=id)
         fm = AddFoodItems(instance=model)
         return render(request, 'fooditems/Edititems.html', {'form': fm})
 
     def post(self, request, id):
-        model = Fooditems.objects.get(id=id)
+        # model = Fooditems.objects.get(id=id)
+        model = get_object_or_404(Fooditems, id=id)
         fm = AddFoodItems(request.POST, instance=model)
 
         if fm.is_valid():
@@ -83,13 +86,13 @@ class editItems(View):
             return redirect('foodhome')
 
 
-class app2(generic.ListView):
-    model = Fooditems
-    context_object_name = "itemModel"
-    template_name = "authentication/app2.html"
+# class app2(generic.ListView):
+#     model = Fooditems
+#     context_object_name = "itemModel"
+#     template_name = "authentication/app2.html"
 
-    def get_queryset(self):
-        return Fooditems.objects.all().values()
+#     def get_queryset(self):
+#         return Fooditems.objects.all().values()
 
 
 # class foodhome(generic.ListView):
