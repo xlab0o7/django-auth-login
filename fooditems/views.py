@@ -1,6 +1,4 @@
-
-# from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from .models import FoodLog, Fooditems
