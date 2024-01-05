@@ -1,11 +1,9 @@
-from django.http import HttpResponse, HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from .models import FoodLog, Fooditems
 from .form import AddFoodItems
 from django.views import generic
-
-# Create your views here.
 
 # this code is in generic views which works the same as code above
 
@@ -82,6 +80,68 @@ class editItems(View):
         if fm.is_valid():
             fm.save()
             return redirect('foodhome')
+
+
+# class FoodItemsViewSet(View):
+#     def list(self, request):
+#         food = Fooditems.objects.filter(user=request.user)
+#         allfood = Fooditems.objects.all()
+#         foodlog = FoodLog.objects.filter(user=request.user)
+#         return render(request, 'fooditems/index.html', {'food': food, 'allfood': allfood, 'foodlog': foodlog})
+
+#     def create(self, request):
+#         selected_food = request.POST.get('food_consumed')
+#         food_consumed = get_object_or_404(Fooditems, name=selected_food)
+#         user = request.user
+#         food_log = FoodLog.objects.create(
+#             user=user, food_consumed=food_consumed)
+#         food_log.save()
+#         return redirect('foodhome')
+
+#     def update(self, request):
+#         model = get_object_or_404(Fooditems, id=id)
+#         fm = AddFoodItems(request.POST, instance=model)
+#         if fm.is_valid():
+#             fm.save()
+#             return redirect('foodhome')
+
+#     def delete(self, request):
+#         id = request.POST.get('id')
+#         model = get_object_or_404(Fooditems, id=id)
+#         model.delete()
+#         return redirect('foodhome')
+
+
+# class FoodLogViewSet:
+#     def delete(self, request):
+#         id = request.POST.get('id')
+#         model = get_object_or_404(FoodLog, id=id)
+#         model.delete()
+#         return redirect('foodhome')
+
+
+#         fm = AddFoodItems(request.POST)
+#         if fm.is_valid():
+#             food_items = fm.save(commit=False)
+#             food_items.user = request.user
+#             food_items.save()
+#             return redirect('foodhome')
+#         else:
+#             return render(request, 'fooditems/Additems.html', {'form': fm})
+
+#     def update(self, request, id):
+#         fooditem = get_object_or_404(Fooditems, id=id, user=request.user)
+#         fm = AddFoodItems(request.POST, instance=fooditem)
+#         if fm.is_valid():
+#             fm.save()
+#             return JsonResponse({"success": True})
+#         else:
+#             return JsonResponse({"success": False, "error": fm.errors}, status=400)
+
+#     def delete(self, request, id):
+#         fooditems = get_object_or_404(Fooditems, id=id, user=request.user)
+#         fooditems.delete()
+#         return JsonResponse({'success': True})
 
 
 # class app2(generic.ListView):

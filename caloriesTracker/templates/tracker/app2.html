@@ -18,32 +18,38 @@
     <div class="container">
     <div class='row justify-content-center text-white mt-3 '>
       <div class="col-8">
-        <form method='POST'>
-          {% csrf_token %}
-          <table class="table table-dark table-hover" style="width:80%">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-              <th scope="col">Select</th>
-              <th scope="col">Food List</th>
-              <th scope="col">Calories</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for items in foods %}
-            <tr>
-              <th scope="row">{{forloop.counter}}</th>
-              <td>
-                <input type="radio" name="selectedFood" value="{{items.id}}">
-              </td>
-              <td>{{items.names}}</td>
-              <td>{{items.calories}}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        <button class="btn btn-primary" type='submit'>Add Selected Item</button>
-      </form>
+          <form method='POST'>
+              {% csrf_token %}
+
+              <table class="table table-dark table-hover" style="width:80%">
+
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                  <th scope="col">Select</th>
+                  <th scope="col">Food List</th>
+                  <th scope="col">Calories</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for items in foods %}
+                <tr>
+                  <th scope="row">{{forloop.counter}}</th>
+                  <td>
+                    <input type="radio" value={{items.id}} name="selected_Food" id="selected_Food_{{forloop.counter}}">
+                  </td>
+                  <td>{{items.name}}</td>
+                  <td>{{items.ucalories}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+              
+            </table>
+
+            <button type='submit' class="btn btn-primary">Add Selected Item</button>
+          
+          </form>
       </div>
       
       <div class="col">
@@ -58,12 +64,12 @@
             </tr>
           </thead>
           <tbody>
-            {% for items in foods %}
+            {% for items in listfood %}
             <tr>
               <th scope="row">{{forloop.counter}}</th>
               <td>{{user.get_username}}</td>
-              <td>{{items.names}}</td>
-              <td>{{items.calories}}</td>
+              <td>{{items.food_items.name}}</td>
+              <td>{{items.food_items.ucalories}}</td>
             </tr>
             {% endfor %}
           </tbody>
@@ -74,7 +80,36 @@
 </section>
 {% endblock main_content %}
 
-{% block script %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% block script %} {% endcomment %}
 {% comment %} <script>
   $(document).ready(function(){
     console.log("button is pressed");
@@ -95,7 +130,7 @@
       document.querySelector("#secondTable tbody").appendChild(newRow);
   }
 </script> {% endcomment %}
-{% endblock script %}
+{% comment %} {% endblock script %} {% endcomment %}
 {% comment %} <div class='row text-center  mt-5'>
   {% for food in foods %}
   <p>{{ food.names }} - {{ food.calories }} calories <a href="{% url 'caloriesTracker:add_food' food.id %}">Add</a></p>

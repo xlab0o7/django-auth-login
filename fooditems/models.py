@@ -28,9 +28,5 @@ class FoodLog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     food_consumed = models.ForeignKey(Fooditems, on_delete=models.CASCADE)
 
-    # class Meta:
-    #     verbose_name = 'Food Log'
-    #     verbose_name_plural = 'Food Log'
-
     def __str__(self):
         return f'{self.user.username} - {self.food_consumed.name}'
